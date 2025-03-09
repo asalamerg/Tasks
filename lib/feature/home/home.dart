@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tasks/feature/list/add_ShowModel.dart';
 import 'package:tasks/feature/list/list.dart';
 import 'package:tasks/feature/settings/settings.dart';
 
@@ -20,25 +21,43 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-          type:  BottomNavigationBarType.shifting,
-          iconSize: 30,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.blue,
-          currentIndex: select,
-          onTap: (index){
-            select=index;
-            setState(() {
+      bottomNavigationBar: BottomAppBar(
+          color: Colors.white,
 
-            });
-          },
-          items: [
+        shape: CircularNotchedRectangle(),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          notchMargin: 50,
+        padding: EdgeInsets.zero,
 
-        BottomNavigationBarItem(icon: Icon(Icons.list),label: "List"),
-        BottomNavigationBarItem(icon: Icon(Icons.settings),label: "Settings"),
-      ]),
+        child: BottomNavigationBar(
+            elevation: 0,
 
+            type:  BottomNavigationBarType.shifting,
+            iconSize: 30,
+            selectedItemColor: Colors.black,
+            unselectedItemColor: Colors.blue,
+            currentIndex: select,
+            onTap: (index){
+              select=index;
+              setState(() {
+
+              });
+            },
+            items: [
+
+          BottomNavigationBarItem(icon: Icon(Icons.list),label: "List"),
+          BottomNavigationBarItem(icon: Icon(Icons.settings),label: "Settings"),
+        ]),
+      ),
       body: items[select],
+      floatingActionButton: FloatingActionButton(
+
+         onPressed: ()=>showModalBottomSheet(context: context ,builder: (context) => AddShoeModel(),),
+        backgroundColor: Colors.blue,
+        child: Icon(Icons.add,color: Colors.white ,size: 30, ),
+        shape: CircleBorder(side: BorderSide(color: Colors.white ,width: 4)),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
