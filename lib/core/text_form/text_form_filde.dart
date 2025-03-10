@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class DefaultTextForm extends StatelessWidget{
   String hindText ;
   TextEditingController controller ;
-  DefaultTextForm({required this.hindText ,required this.controller});
+  String? Function(String?)? validator ;
+  DefaultTextForm({required this.hindText ,required this.controller ,required this.validator});
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -15,6 +16,7 @@ class DefaultTextForm extends StatelessWidget{
 
       ),
       controller: controller,
+      validator: validator,
 
 
     );

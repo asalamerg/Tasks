@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tasks/feature/list/add_ShowModel.dart';
-import 'package:tasks/feature/list/list.dart';
+import 'package:tasks/feature/list/presebtation/add_ShowModel.dart';
+import 'package:tasks/feature/list/presebtation/list.dart';
 import 'package:tasks/feature/settings/settings.dart';
 
 class Home extends StatefulWidget{
