@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
       body: items[select],
       floatingActionButton: FloatingActionButton(
 
-         onPressed: ()=>showModalBottomSheet(context: context ,builder: (context) => AddShoeModel(),),
+         onPressed: ()=>showModalBottomSheet(context: context ,builder: (context) => AddShoeModel(), isScrollControlled: true),
         backgroundColor: Colors.blue,
         child: Icon(Icons.add,color: Colors.white ,size: 30, ),
         shape: CircleBorder(side: BorderSide(color: Colors.white ,width: 4)),

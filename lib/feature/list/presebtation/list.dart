@@ -26,13 +26,50 @@ class _ListsState extends State<Lists> {
 
     return  SafeArea(
       child: Column(children: [
-       TableCalendar(
-           focusedDay:  DateTime.now(),
-           firstDay: DateTime.now().subtract(const Duration(days: 30)),
-           lastDay: DateTime.now().add(const Duration(days: 30)),
-         onPageChanged: (data){},
+        TableCalendar(
+          focusedDay: DateTime.now(),
+          firstDay: DateTime.now().subtract(const Duration(days: 30)),
+          lastDay: DateTime.now().add(const Duration(days: 30)),
 
-       ),
+          // 📌 تحديد اليوم المختار
+          selectedDayPredicate: (day) {
+            return isSameDay(tasksProvider.selectDateTime, day);
+          },
+
+          // 🎨 تخصيص مظهر الجدول
+          calendarStyle: const CalendarStyle(
+            todayDecoration: BoxDecoration(
+              color: Colors.blue, // لون اليوم الحالي
+              shape: BoxShape.circle, // شكل دائري
+            ),
+            selectedDecoration: BoxDecoration(
+              color: Colors.green, // لون اليوم المحدد
+              shape: BoxShape.circle,
+            ),
+            weekendTextStyle: TextStyle(color: Colors.red), // لون مخصص لعطلة نهاية الأسبوع
+            defaultTextStyle: TextStyle(fontSize: 16), // خط النص الافتراضي
+          ),
+
+          // 📅 تنسيق عناوين الأيام (الأحد - الإثنين ...)
+          daysOfWeekStyle: const DaysOfWeekStyle(
+            weekdayStyle: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            weekendStyle: TextStyle(color: Colors.red),
+          ),
+
+          // 📅 تنسيق شريط الأشهر
+          headerStyle: const HeaderStyle(
+            formatButtonVisible: false, // إخفاء زر تغيير التنسيق
+            titleCentered: true, // جعل العنوان في المنتصف
+            titleTextStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            leftChevronIcon: Icon(Icons.arrow_back_ios, color: Colors.blue),
+            rightChevronIcon: Icon(Icons.arrow_forward_ios, color: Colors.blue),
+          ),
+
+          // 📌 تحديد اليوم
+          onDaySelected: (selectedDay, focusedDay) {
+            tasksProvider.ChangeDateTime(selectedDay);
+          },
+        ),
 
 
        const SizedBox(height: 22 ,),
