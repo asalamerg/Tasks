@@ -5,6 +5,7 @@ import 'package:tasks/core/theme/app_theme.dart';
 import 'package:tasks/feature/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tasks/feature/list/model_view/provider_tasks.daer.dart';
+import 'package:tasks/feature/list/presebtation/update_tasks.dart';
 import 'firebase_options.dart';
 
 Future<void> main()async {
@@ -23,8 +24,10 @@ class Tasks extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
    return MaterialApp(
+     debugShowCheckedModeBanner: false,
      routes: {
        Home.routeName :(context)=>Home(),
+       UpdateTasks.routeName :(context)=>UpdateTasks()
      },initialRoute: Home.routeName,
      theme: AppTheme.light,
      themeMode: ThemeMode.light,

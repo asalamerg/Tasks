@@ -12,17 +12,36 @@ withConverter<TasksModel>(
 );
 
   static Future<void> addTasksSentFirebase(TasksModel tasksModel)async{
-  CollectionReference<TasksModel>  addTasks =  getTasksFromFirebaseCollection();
-   DocumentReference<TasksModel> documentReference = addTasks.doc(); // doc = add id Document
+  CollectionReference<TasksModel>  getTasks =  getTasksFromFirebaseCollection();
+   DocumentReference<TasksModel> documentReference = getTasks.doc(); // doc = add id Document
    tasksModel.id=documentReference.id;
    return documentReference.set(tasksModel);
 
  }
 
 static Future<List<TasksModel>> getTasksFromFirebase()async{
-  CollectionReference<TasksModel>  addTasks =  getTasksFromFirebaseCollection();
- QuerySnapshot<TasksModel> querySnapshot = await addTasks.get();
+  CollectionReference<TasksModel>  getTasks =  getTasksFromFirebaseCollection();
+ QuerySnapshot<TasksModel> querySnapshot = await getTasks.get();
   return querySnapshot.docs.map((docSnapShot)=>docSnapShot.data()).toList();
 }
 
+static Future<void> deleteTasksFromFirebase(String id)async{
+  CollectionReference<TasksModel>  getTasks =  getTasksFromFirebaseCollection();
+ return  getTasks.doc(id).delete();
+}
+static Future<void> updateTasksFromFirebase(TasksModel tasksModel)async{
+      CollectionReference<TasksModel>   getTasks=  getTasksFromFirebaseCollection();
+      DocumentReference<TasksModel>  updateTasks= getTasks.doc(tasksModel.id);
+    await  updateTasks.update(tasksModel.toJson());
+
+
+    }
+
+static Future<void>  updateIsDone(TasksModel tasksModel)async{
+      CollectionReference<TasksModel>   getTasks=  getTasksFromFirebaseCollection();
+      DocumentReference<TasksModel>  updateTasks= getTasks.doc(tasksModel.id);
+     await  updateTasks.update({"isDone" : !tasksModel.isDone});
+
+
+    }
 }
