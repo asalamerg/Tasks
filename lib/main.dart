@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tasks/core/theme/app_theme.dart';
+import 'package:tasks/feature/auth/login/login.dart';
+import 'package:tasks/feature/auth/register/register.dart';
 import 'package:tasks/feature/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tasks/feature/list/model_view/provider_tasks.daer.dart';
@@ -27,8 +29,10 @@ class Tasks extends StatelessWidget{
      debugShowCheckedModeBanner: false,
      routes: {
        Home.routeName :(context)=>Home(),
-       UpdateTasks.routeName :(context)=>UpdateTasks()
-     },initialRoute: Home.routeName,
+       UpdateTasks.routeName :(context)=>UpdateTasks(),
+       Login.routeName :(context)=>Login(),
+       Register.routeName :(context)=>Register(),
+     },initialRoute: Login.routeName,
      theme: AppTheme.light,
      themeMode: ThemeMode.light,
    );
