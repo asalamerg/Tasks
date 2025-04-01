@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tasks/core/theme/app_theme.dart';
+import 'package:tasks/feature/auth/data/user_provder.dart';
 import 'package:tasks/feature/auth/login/login.dart';
 import 'package:tasks/feature/auth/register/register.dart';
 import 'package:tasks/feature/home/home.dart';
@@ -13,10 +13,11 @@ import 'firebase_options.dart';
 Future<void> main()async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
-  await FirebaseFirestore.instance.disableNetwork();
-  runApp(  ChangeNotifierProvider(
-      create: (_)=>TasksProvider(),
-        child: Tasks()));
+
+  runApp( MultiProvider(providers: [
+    ChangeNotifierProvider(create:(_)=>TasksProvider(), ) ,
+    ChangeNotifierProvider(create: (_)=>UserProvider()),
+  ], child: const Tasks()));
 
 }
 

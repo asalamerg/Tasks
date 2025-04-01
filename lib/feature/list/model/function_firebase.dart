@@ -4,7 +4,8 @@ import 'package:tasks/feature/list/model/tasks_model.dart';
 
 class FunctionFirebase{
 
-static  CollectionReference<TasksModel> getTasksFromFirebaseCollection() => FirebaseFirestore.instance.collection("Tasks").
+static  CollectionReference<TasksModel> getTasksFromFirebaseCollection() =>
+    FirebaseFirestore.instance.collection("Tasks").
 withConverter<TasksModel>(
     fromFirestore: (docSnapShot ,_)=>TasksModel.fromJson(docSnapShot.data()!) ,
     toFirestore: (tasks,_)=>tasks.toJson()

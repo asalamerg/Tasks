@@ -1,6 +1,11 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'package:tasks/feature/auth/data/firebaseFunctionUser.dart';
+import 'package:tasks/feature/auth/data/user_provder.dart';
 import 'package:tasks/feature/auth/register/register.dart';
 import 'package:tasks/feature/auth/widget/default_button.dart';
 import 'package:tasks/feature/auth/widget/textformfield.dart';
@@ -33,12 +38,7 @@ class _LoginState extends State<Login> {
               DefaultTextFormField(title: "Email",controller: EmailController, validator: validation.email,),
 
                SizedBox(height: MediaQuery.of(context).size.height * 0.20,),
-              DefaultButton(onPressed: (){
-                if (formKey.currentState!.validate()) {
-                  Login();
-                }
-
-              },title: "Login",),
+              DefaultButton(onPressed: Login ,title: "Login",),
 
 
               SizedBox(height: 10,),
@@ -53,7 +53,32 @@ class _LoginState extends State<Login> {
     );
   }
   void Login(){
-      Navigator.of(context).pushNamed(Home.routeName);
+    if (formKey.currentState!.validate()) {
+      FunctionFirebaseUser.LoginAccount(
+          EmailController.text ,
+          passwordController.text).
+      then((user){
+        Provider.of<UserProvider>(context,listen: false).UpdateUser(user);
+        Navigator.of(context).pushReplacementNamed(Home.routeName);
+
+      }).
+      catchError((error){
+        String ? messages ;
+        if(error is FirebaseAuthException){
+          messages =error.message;
+        }
+        Fluttertoast.showToast(
+            msg:messages ?? " error",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.blue,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
+      });
+
+    }
 
   }
 
