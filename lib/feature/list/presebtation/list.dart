@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tasks/feature/auth/data/user_provder.dart';
 
 import 'package:tasks/feature/list/model_view/provider_tasks.daer.dart';
 import 'package:tasks/feature/list/presebtation/tasksItems.dart';
@@ -18,9 +19,10 @@ class _ListsState extends State<Lists> {
   @override
   Widget build(BuildContext context) {
     TasksProvider tasksProvider =Provider.of(context);
+    UserProvider  userProvider =Provider.of(context, listen: false);
 
     if(isTasks){
-      tasksProvider.getTasks();
+      tasksProvider.getTasks(userProvider.modelUser!.id);
       isTasks=false;
     }
 
@@ -67,7 +69,7 @@ class _ListsState extends State<Lists> {
 
           // 📌 تحديد اليوم
           onDaySelected: (selectedDay, focusedDay) {
-            tasksProvider.ChangeDateTime(selectedDay);
+            tasksProvider.ChangeDateTime(selectedDay , userProvider.modelUser!.id);
           },
         ),
 

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tasks/core/default_button/def_button.dart';
 import 'package:tasks/core/text_form/text_form_filde.dart';
 import 'package:tasks/core/validator/validator.dart';
+import 'package:tasks/feature/auth/data/user_provder.dart';
 import 'package:tasks/feature/list/model/function_firebase.dart';
 import 'package:tasks/feature/list/model/tasks_model.dart';
 import 'package:tasks/feature/list/model_view/provider_tasks.daer.dart';
@@ -25,6 +26,7 @@ class _AddShoeModelState extends State<AddShoeModel> {
 
   @override
   Widget build(BuildContext context) {
+
     return Form(
       key:formKey ,
       child: Padding(
@@ -32,7 +34,7 @@ class _AddShoeModelState extends State<AddShoeModel> {
 
         child: Container(
           height: MediaQuery.of(context).size.height *0.5,
-           padding:   EdgeInsets.all(20),
+           padding:   const EdgeInsets.all(20),
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
@@ -69,18 +71,23 @@ class _AddShoeModelState extends State<AddShoeModel> {
       ),
     );
   }
+
   Future<void> AddTasks()async{
     if (formKey.currentState!.validate()) {
      TasksModel tasksModel=TasksModel(
          title: Title.toString(),
          description: Description.toString(),
-         dateTime: selectDataTime
+         dateTime: selectDataTime,
+
+
+
      );
-     await  FunctionFirebase.addTasksSentFirebase(tasksModel)
+     String userid=Provider.of<UserProvider>(context,listen: false).modelUser!.id;
+     await  FunctionFirebase.addTasksSentFirebase(tasksModel,userid )
          .timeout(
        const Duration(microseconds: 200),
        onTimeout: (){Navigator.of(context).pop();
-       Provider.of<TasksProvider>(context , listen:  false).getTasks();
+       Provider.of<TasksProvider>(context , listen:  false).getTasks(userid);
        Fluttertoast.showToast(
            msg: "Added Tasks success full",
            toastLength: Toast.LENGTH_SHORT,

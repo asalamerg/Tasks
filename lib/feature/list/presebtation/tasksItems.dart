@@ -6,6 +6,7 @@ import 'package:tasks/feature/list/model/tasks_model.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tasks/feature/list/model_view/provider_tasks.daer.dart';
 
+import '../../auth/data/user_provder.dart';
 import 'update_tasks.dart';
 class TasksItems extends StatelessWidget {
   final TasksModel tasksModel;
@@ -28,9 +29,10 @@ class TasksItems extends StatelessWidget {
             SlidableAction(
               borderRadius:BorderRadius.circular(30),
               onPressed: (_){
-                FunctionFirebase.deleteTasksFromFirebase(tasksModel.id).
+                String userid=Provider.of<UserProvider>(context,listen: false).modelUser!.id;
+                FunctionFirebase.deleteTasksFromFirebase(tasksModel.id,userid ).
                 timeout(const Duration(microseconds: 100)
-                    ,onTimeout:()=>Provider.of<TasksProvider>(context,listen: false).getTasks()
+                    ,onTimeout:()=>Provider.of<TasksProvider>(context,listen: false).getTasks(userid)
 
 
                 ).catchError((error){
@@ -111,8 +113,8 @@ class TasksItems extends StatelessWidget {
 
                   InkWell(
                     onTap: (){
-                      FunctionFirebase.updateIsDone(tasksModel);
-                      FunctionFirebase.getTasksFromFirebase();
+                      FunctionFirebase.updateIsDone(tasksModel, tasksModel.id);
+                      FunctionFirebase.getTasksFromFirebase(tasksModel.id);
                     },
                     child: tasksModel.isDone ? const Text("isDone",style: TextStyle(fontSize: 20 , color: Colors.green),)
                         :  Container(

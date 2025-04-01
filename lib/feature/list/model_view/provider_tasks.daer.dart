@@ -6,8 +6,8 @@ import 'package:tasks/feature/list/model/tasks_model.dart';
 class TasksProvider with ChangeNotifier{
 
   List<TasksModel> tasks=[];
-  Future<void>    getTasks()async{
-    tasks=await FunctionFirebase.getTasksFromFirebase();
+  Future<void>    getTasks(String userId)async{
+    tasks=await FunctionFirebase.getTasksFromFirebase(userId);
     tasks=tasks.where((task)=>
         task.dateTime.year ==selectDateTime.year &&
         task.dateTime.month ==selectDateTime.month &&
@@ -17,9 +17,9 @@ class TasksProvider with ChangeNotifier{
 
   DateTime selectDateTime=DateTime.now();
 
-   void ChangeDateTime(DateTime date){
+   void ChangeDateTime(DateTime date, String userId){
      selectDateTime=date ;
-     getTasks();
+      getTasks(userId);
          notifyListeners();
   }
 

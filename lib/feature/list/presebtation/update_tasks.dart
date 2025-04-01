@@ -9,7 +9,7 @@ import 'package:tasks/feature/list/model/tasks_model.dart';
 class UpdateTasks extends StatefulWidget{
  static const  String routeName="update";
 
-  UpdateTasks({super.key});
+  const UpdateTasks({super.key});
 
   @override
   State<UpdateTasks> createState() => _UpdateTasksState();
@@ -43,27 +43,27 @@ class _UpdateTasksState extends State<UpdateTasks> {
           SingleChildScrollView(
             child: Container(
               width:  double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white
               ),
-              margin: EdgeInsets.symmetric(vertical: 33,horizontal: 33),
-              padding: EdgeInsets.all(15),
+              margin: const EdgeInsets.symmetric(vertical: 33,horizontal: 33),
+              padding: const EdgeInsets.all(15),
               child: Column(
             
                 children: [
-                Text("Edit Tasks",style: TextStyle(fontSize: 30 ,),) ,
+                const Text("Edit Tasks",style: TextStyle(fontSize: 30 ,),) ,
             
                 SizedBox(height: MediaQuery.of(context).size.height *0.15,),
-                  Text("Tasks Title"),
+                  const Text("Tasks Title"),
                   TextFormField(
                     initialValue: tasksModel.title,
                   ),
                   const SizedBox(height: 25,),
-                  Text("Tasks Details"),
+                  const Text("Tasks Details"),
                   TextFormField( initialValue: tasksModel.description,),
                   const SizedBox(height: 25,),
             
-                  Align( alignment: Alignment.bottomLeft,child: Text("Select Time",style: TextStyle(fontSize: 20),)),
+                  const Align( alignment: Alignment.bottomLeft,child: Text("Select Time",style: TextStyle(fontSize: 20),)),
                   const SizedBox(height: 25,),
             
                   InkWell(
@@ -82,16 +82,16 @@ class _UpdateTasksState extends State<UpdateTasks> {
             
             
                       },
-                      child: Text(format.format(tasksModel.dateTime),style: TextStyle(fontSize: 20 ,),)) ,
+                      child: Text(format.format(tasksModel.dateTime),style: const TextStyle(fontSize: 20 ,),)) ,
             
                   const SizedBox(height: 25,),
             
                   defaultButton(title: "Save Changes ",onPressed: ()async{
-                   await FunctionFirebase.updateTasksFromFirebase(tasksModel).timeout(
-                     Duration(),
+                   await FunctionFirebase.updateTasksFromFirebase(tasksModel, tasksModel.id).timeout(
+                     const Duration(),
                      onTimeout: (){
                        Navigator.of(context).pop();
-                       FunctionFirebase.getTasksFromFirebase();
+                       FunctionFirebase.getTasksFromFirebase(tasksModel.id);
                        Fluttertoast.showToast(
                            msg: "Update Tasks ",
                            toastLength: Toast.LENGTH_SHORT,
